@@ -7,37 +7,74 @@ export class Name {
     private delimiter: string = this.DEFAULT_DELIMITER;
 
     constructor(other: string[], delimiter?: string) {
-        throw new Error("needs implementation");
+        this.components = other;
+        if(delimiter != null)
+        {
+            this.delimiter = delimiter;
+        }
     }
-
-    /** Returns human-readable representation of Name instance */
+// Conversion
     public asNameString(delimiter: string = this.delimiter): string {
-        throw new Error("needs implementation");
-    }
+        let temp = "";
+        
+        if(this.components.length == 0)
+        {
+            return temp;
+        }
+        
+        for(let i = 0; i < this.components.length; i++)
+        {
+            if(i != this.components.length-1)
+            {
+            temp = temp + this.components[i] + delimiter;
+            }else{
+                temp = temp + this.components[i];
+            }
+        }
 
+        return temp;
+    }
+    //Query
     public getComponent(i: number): string {
-        throw new Error("needs implementation");
+        if(i>=0 && i < this.components.length){
+            return this.components[i];
+        }
+        else
+        {
+            throw new Error("Index out of Array");
+        }
     }
-
+    //Mutation
     public setComponent(i: number, c: string): void {
-        throw new Error("needs implementation");
-    }
+        if(this.components.length < i)
+            {
+                this.components[i] = c;
+                
+            } 
 
-     /** Returns number of components in Name instance */
-     public getNoComponents(): number {
-        throw new Error("needs implementation");
     }
-
+//Query
+    public getNoComponents(): number {
+        return this.components.length;
+    }
+// Command
     public insert(i: number, c: string): void {
-        throw new Error("needs implementation");
+        let temp = [];
+        if(i < this.components.length && i >= 0)
+        {
+            temp = this.components.slice(0,i).concat(c).concat(this.components.slice(i));
+            this.components=temp;
+        }
     }
-
+// Command
     public append(c: string): void {
-        throw new Error("needs implementation");
+        this.components = this.components.concat(c);
     }
-
+// Command
     public remove(i: number): void {
-        throw new Error("needs implementation");
+        if(i >= 0){
+        this.components=this.components.slice(0,i).concat(this.components.slice(i+1));
+        }
     }
-
 }
+
