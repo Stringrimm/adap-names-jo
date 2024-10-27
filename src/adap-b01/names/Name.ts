@@ -18,7 +18,7 @@ export class Name {
             let re = this.ESCAPE_CHARACTER+delimiter;
             return this.components.map((c)=>c.replace(delimiter, re)).join(delimiter)
     }
-/**@methodtype query-method*/
+/**@methodtype get-method*/
     public getComponent(i: number): string {
         if(i>=0 && i < this.components.length){
             return this.components[i];
@@ -28,7 +28,7 @@ export class Name {
             throw new Error("Index out of Array");
         }
     }
-    /**@methodtype mutation-method*/
+    /**@methodtype set-method*/
     public setComponent(i: number, c: string): void {
         if(this.components.length < i)
         {
@@ -36,7 +36,7 @@ export class Name {
         } 
 
     }
-/** @methodtype query-method*/
+/** @methodtype get-method*/
     public getNoComponents(): number 
     {
         return this.components.length;
