@@ -15,8 +15,8 @@ export class Name {
     }
 /** @methodtype conversion-method */
     public asNameString(delimiter: string = this.delimiter): string {  
-            let re = this.ESCAPE_CHARACTER+delimiter;
-            return this.components.map((c)=>c.replace(delimiter, re)).join(delimiter)
+            let re = new RegExp(`[${delimiter}]`, 'g');
+            return this.components.map((c)=>c.replace(re, this.ESCAPE_CHARACTER+delimiter)).join(delimiter)
     }
 /**@methodtype get-method*/
     public getComponent(i: number): string {

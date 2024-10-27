@@ -38,7 +38,7 @@ describe("Escape character extravaganza", () => {
 
 describe("Escape", () => {
   it("test construction 1", () => {
-    let n: Name = new Name(["oss", "cs", "fau", ".de"]);
-    expect(n.asNameString()).toBe("oss.cs.fau.\\.de");
+    let n: Name = new Name(["oss", "cs", ".fa.u", ".de"]);
+    expect(n.asNameString()).toBe("oss.cs.\\.fa\\.u.\\.de");
   });
 });
