@@ -8,6 +8,7 @@ describe("Basic initialization tests", () => {
   });
 });
 
+
 describe("Basic function tests", () => {
   it("test insert", () => {
     let n: Name = new Name(["oss", "fau", "de"]);
@@ -31,5 +32,13 @@ describe("Escape character extravaganza", () => {
     expect(n.asNameString()).toBe("oss.cs.fau.de");
     n.append("people");
     expect(n.asNameString()).toBe("oss.cs.fau.de#people");
+  });
+});
+
+
+describe("Escape", () => {
+  it("test construction 1", () => {
+    let n: Name = new Name(["oss", "cs", "fau", ".de"]);
+    expect(n.asNameString()).toBe("oss.cs.fau.\\.de");
   });
 });

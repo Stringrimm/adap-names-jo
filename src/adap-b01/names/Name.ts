@@ -14,25 +14,9 @@ export class Name {
         }
     }
 // Conversion
-    public asNameString(delimiter: string = this.delimiter): string {
-        let temp = "";
-        
-        if(this.components.length == 0)
-        {
-            return temp;
-        }
-        
-        for(let i = 0; i < this.components.length; i++)
-        {
-            if(i != this.components.length-1)
-            {
-            temp = temp + this.components[i] + delimiter;
-            }else{
-                temp = temp + this.components[i];
-            }
-        }
-
-        return temp;
+    public asNameString(delimiter: string = this.delimiter): string {  
+            let re = this.ESCAPE_CHARACTER+delimiter;
+            return this.components.map((c)=>c.replace(delimiter, re)).join(delimiter)
     }
     //Query
     public getComponent(i: number): string {
@@ -47,23 +31,21 @@ export class Name {
     //Mutation
     public setComponent(i: number, c: string): void {
         if(this.components.length < i)
-            {
-                this.components[i] = c;
-                
-            } 
+        {
+            this.components[i] = c;           
+        } 
 
     }
 //Query
-    public getNoComponents(): number {
+    public getNoComponents(): number 
+    {
         return this.components.length;
     }
 // Command
     public insert(i: number, c: string): void {
-        let temp = [];
         if(i < this.components.length && i >= 0)
         {
-            temp = this.components.slice(0,i).concat(c).concat(this.components.slice(i));
-            this.components=temp;
+            this.components = this.components.slice(0,i).concat(c).concat(this.components.slice(i));
         }
     }
 // Command
@@ -72,7 +54,7 @@ export class Name {
     }
 // Command
     public remove(i: number): void {
-        if(i >= 0){
+        if(i >= 0 && i < this.components.length){
         this.components=this.components.slice(0,i).concat(this.components.slice(i+1));
         }
     }
