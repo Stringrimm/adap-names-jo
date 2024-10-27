@@ -13,12 +13,12 @@ export class Name {
             this.delimiter = delimiter;
         }
     }
-// Conversion
+/** @methodtype conversion-method */
     public asNameString(delimiter: string = this.delimiter): string {  
             let re = this.ESCAPE_CHARACTER+delimiter;
             return this.components.map((c)=>c.replace(delimiter, re)).join(delimiter)
     }
-    //Query
+/**@methodtype query-method*/
     public getComponent(i: number): string {
         if(i>=0 && i < this.components.length){
             return this.components[i];
@@ -28,7 +28,7 @@ export class Name {
             throw new Error("Index out of Array");
         }
     }
-    //Mutation
+    /**@methodtype mutation-method*/
     public setComponent(i: number, c: string): void {
         if(this.components.length < i)
         {
@@ -36,23 +36,23 @@ export class Name {
         } 
 
     }
-//Query
+/** @methodtype query-method*/
     public getNoComponents(): number 
     {
         return this.components.length;
     }
-// Command
+/** @methodtype command-method */
     public insert(i: number, c: string): void {
         if(i < this.components.length && i >= 0)
         {
             this.components = this.components.slice(0,i).concat(c).concat(this.components.slice(i));
         }
     }
-// Command
+/** @methodtype command-method */
     public append(c: string): void {
         this.components = this.components.concat(c);
     }
-// Command
+/** @methodtype command-method */
     public remove(i: number): void {
         if(i >= 0 && i < this.components.length){
         this.components=this.components.slice(0,i).concat(this.components.slice(i+1));
