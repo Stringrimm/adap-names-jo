@@ -17,11 +17,38 @@ export class StringName implements Name {
     }
 
     public asString(delimiter: string = this.delimiter): string {
-        return this.name.replaceAll(`${ESCAPE_CHARACTER}${delimiter}`,delimiter);
+        return this.name.replaceAll(ESCAPE_CHARACTER+delimiter,delimiter);
     }
 
     public asDataString(): string {
-        return this.name;
+        let temp = "";
+        for(let i = 0; i < this.name.length; i++)
+        {
+            let curChar = this.name.charAt(i);
+            if(curChar == ESCAPE_CHARACTER && this.name.charAt(i+1)==this.delimiter)
+            {            
+                temp += this.delimiter;
+                i +=1;
+            }
+            else if(curChar == ESCAPE_CHARACTER && this.name.charAt(i+1)==DEFAULT_DELIMITER)
+            {
+                temp += ESCAPE_CHARACTER+DEFAULT_DELIMITER;
+                i+=1;
+            }
+            else if(curChar == this.delimiter)
+            {
+                temp += DEFAULT_DELIMITER;
+            }
+            else if(curChar == DEFAULT_DELIMITER)
+            {
+                temp += ESCAPE_CHARACTER+DEFAULT_DELIMITER;
+            }
+            else
+            {
+                temp += curChar;
+            }
+        }
+        return temp
     }
 
     public isEmpty(): boolean {

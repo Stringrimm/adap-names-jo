@@ -18,7 +18,45 @@ export class StringArrayName implements Name {
     }
 
     public asDataString(): string {
-        return this.components.join(this.delimiter);
+        //return this.components.map(s => s.replaceAll(DEFAULT_DELIMITER, ESCAPE_CHARACTER+this.delimiter)).join(DEFAULT_DELIMITER);
+        return this.sanitizeComp();
+    }
+
+    private sanitizeComp(): string
+    {
+        let s = "";
+        this.components.forEach(element => {
+            let temp = "";
+            for(let i = 0; i < element.length; i++)
+            {
+                let curChar = element.charAt(i);
+                if(curChar == ESCAPE_CHARACTER && element.charAt(i+1)==this.delimiter)
+                {            
+                    temp += this.delimiter;
+                    i +=1;
+                }
+                else if(curChar == ESCAPE_CHARACTER && element.charAt(i+1)==DEFAULT_DELIMITER)
+                {
+                    temp += ESCAPE_CHARACTER+DEFAULT_DELIMITER;
+                    i+=1;
+                }
+                else if(curChar == this.delimiter)
+                {
+                    temp += DEFAULT_DELIMITER;
+                }
+                else if(curChar == DEFAULT_DELIMITER)
+                {
+                    temp += ESCAPE_CHARACTER+DEFAULT_DELIMITER;
+                }
+                else
+                {
+                    temp += curChar;
+                }
+            }
+            s += temp+DEFAULT_DELIMITER;
+        });
+        //removes last wrong def delimiter
+        return s.slice(0,s.length-1);
     }
 
     public isEmpty(): boolean {
