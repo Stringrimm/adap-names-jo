@@ -13,10 +13,13 @@ export abstract class AbstractName implements Name {
 
     public asString(delimiter: string = this.delimiter): string {
         let acc: string[] = [];
+        console.log(this)
         for(let i = 0; i < this.getNoComponents(); i++)
         {
-            acc.push(this.getComponent(i).replaceAll(ESCAPE_CHARACTER, ''));   
+            let comp = this.getComponent(i).replaceAll(ESCAPE_CHARACTER, '');
+            acc.push(comp);   
         }
+        console.log(acc);
         return acc.join(delimiter);
     }
 
@@ -28,9 +31,9 @@ export abstract class AbstractName implements Name {
         let acc: string[] = [];
         for(let i = 0; i < this.getNoComponents(); i++)
         {
-            acc.push(this.getComponent(i));
+            acc.push(this.getComponent(i).replaceAll(DEFAULT_DELIMITER, ESCAPE_CHARACTER+DEFAULT_DELIMITER).replaceAll(ESCAPE_CHARACTER + this.delimiter, this.delimiter));
         }
-        return acc.join(this.delimiter);
+        return acc.join(DEFAULT_DELIMITER);
     }
 
     public isEqual(other: Name): boolean {
@@ -74,6 +77,7 @@ export abstract class AbstractName implements Name {
         {
             for(let i=0; i < other.getNoComponents(); i++)
             {
+                console.log(other.getComponent(i));
                 let comp = other.getComponent(i);
                 this.append(comp);
             }

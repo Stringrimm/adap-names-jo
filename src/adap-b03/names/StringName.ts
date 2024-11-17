@@ -41,40 +41,8 @@ export class StringName extends AbstractName {
     }
 
     getComponent(i: number): string {
-        let stinglen = this.name.length;
-        let x = 0;
-        let count = 0;
-        let record = "";
-        while(x < stinglen)
-        {
-            let curChar = this.name.charAt(x)
-            if(count === i)
-            {
-                if(curChar != this.delimiter)
-                {
-                record += curChar;
-                }else
-                {
-                    return record;
-                }
-            }
-            if(curChar === ESCAPE_CHARACTER)
-            {
-                let nextChar = this.name.charAt(x+1);
-                if(nextChar === this.delimiter)
-                {
-                    record += nextChar;
-                    x += 2;
-                    continue;
-                }
-            }
-            if(curChar === this.delimiter)
-            {
-                count++;
-            }
-            x++;
-        }
-        return record;
+        let [start,end] = this.getCompInPos(i);
+        return this.name.slice(start,end);
     }
     setComponent(i: number, c: string) {
         if(i >= this.getNoComponents())
