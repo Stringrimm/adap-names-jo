@@ -3,12 +3,14 @@ import { describe, it, expect } from "vitest";
 import { StringName } from "../../../src/adap-b05/names/StringName";
 import { Node } from "../../../src/adap-b05/files/Node";
 import { File } from "../../../src/adap-b05/files/File";
+import { Link } from "../../../src/adap-b05/files/Link";
 import { BuggyFile } from "../../../src/adap-b05/files/BuggyFile";
 import { Directory } from "../../../src/adap-b05/files/Directory";
 import { RootNode } from "../../../src/adap-b05/files/RootNode";
 import { Exception } from "../../adap-b05/common/Exception";
 import {  ServiceFailureException } from "../../../src/adap-b05/common/ServiceFailureException";
 import { InvalidStateException } from "../../../src/adap-b05/common/InvalidStateException";
+
 
 function createFileSystem(): RootNode {
   let rn: RootNode = new RootNode();
@@ -25,7 +27,7 @@ function createFileSystem(): RootNode {
   let bashrc: File = new File(".bashrc", riehle);
   let wallpaper: File = new File("wallpaper.jpg", riehle);
   let projects: Directory = new Directory("projects", riehle);
-
+  let link: Link = new Link("Link",home,bashrc);
   return rn;
 }
 
@@ -33,9 +35,19 @@ describe("Basic naming test", () => {
   it("test name checking", () => {
      let fs: RootNode = createFileSystem();
      let ls: Node = [...fs.findNodes("ls")][0];
-     console.log(ls);
-     expect(ls.getFullName().isEqual(new StringName("/usr/bin/ls", '/')));
+     let link: Node =[...fs.findNodes("Link")][0];
+     console.log(link);
+    expect(ls.getFullName().isEqual(new StringName("/usr/bin/ls", '/')));
   });
+
+
+  it("test name checking extension", () => {
+    let fs: RootNode = createFileSystem();
+    let ls: Node = [...fs.findNodes("ls")][0];
+    let link: Node =[...fs.findNodes("Link")][0];
+    console.log(link);
+    expect(link.getFullName().isEqual(new StringName("/usr/home", '/')));
+ });
 });
 
 function createBuggySetup(): RootNode {
@@ -45,7 +57,6 @@ function createBuggySetup(): RootNode {
   let bin: Directory = new Directory("bin", usr);
   let ls: File = new BuggyFile("ls", bin);
   let code: File = new BuggyFile("code", bin);
-
   let media: Directory = new Directory("media", rn);
 
   let home: Directory = new Directory("home", rn);

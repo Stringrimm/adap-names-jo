@@ -67,7 +67,7 @@ export class Node {
             this.assertClassInvariants();
             
             let acc = new Set<Node>();
-            console.log(this.getBaseName());
+            
             if(this.getBaseName() === bn)
             {
                 acc.add(this);

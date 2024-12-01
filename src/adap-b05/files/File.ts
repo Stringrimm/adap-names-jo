@@ -54,21 +54,7 @@ export class File extends Node {
         return this.state;
     }
 
-    public override findNodes(bn: string): Set<Node> {
-        console.log(this.getBaseName());
-        try{
-            IllegalArgumentException.assertCondition(bn != "");
-            IllegalArgumentException.isNullOrUndefined(bn);
-            this.assertClassInvariants();
-            let acc = super.findNodes(bn);
-            this.assertClassInvariants();
-            return acc;
-        }
-        catch(exception)
-        {
-            throw new ServiceFailureException("FindNodes didn't work as intended", exception as Exception);
-        }
-    }
+   
 
 
 }

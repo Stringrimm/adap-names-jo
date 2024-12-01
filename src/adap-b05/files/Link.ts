@@ -1,6 +1,6 @@
 import { Node } from "./Node";
 import { Directory } from "./Directory";
-import { error } from "console";
+import { Console, error } from "console";
 import { ServiceFailureException } from "../common/ServiceFailureException";
 import { IllegalArgumentException } from "../common/IllegalArgumentException";
 import { Exception } from "../common/Exception";
@@ -40,26 +40,25 @@ export class Link extends Node {
         return result;
     }
 
-    public override findNodes(bn: string): Set<Node> {
-
+    public override findNodes(bn: string): Set<Node>
+    {
+        IllegalArgumentException.assertCondition(bn != "");
+        IllegalArgumentException.isNullOrUndefined(bn);
+        console.log("Path")
         try{
-        IllegalArgumentException.assertCondition(bn !="", "bn is empty");
-        IllegalArgumentException.assertIsNotNullOrUndefined(bn, "bn is null");
-        this.assertClassInvariants();
-
-        let superAcc = super.findNodes(bn);
-        let acc = new Set<Node>();
-
-        if(this.targetNode != null)
-        {
-            acc = new Set<Node>([...superAcc, ...this.targetNode.findNodes(bn)])
+           
+            this.assertClassInvariants();
+            let acc = super.findNodes(bn);
+            if(bn === this.doGetBaseName())
+            {
+                acc.add(this);
+            }
+            this.assertClassInvariants();
+            return acc;
         }
-        
-        return acc;
-        }
-        catch(exception)
+        catch(error)
         {
-            throw new ServiceFailureException("FindNodes didn't work as intended", exception as Exception);
+            throw error;
         }
     }
 }

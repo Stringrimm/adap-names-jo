@@ -21,7 +21,7 @@ export class Directory extends Node {
     {
         IllegalArgumentException.assertCondition(bn != "");
         IllegalArgumentException.isNullOrUndefined(bn);
-        console.log(this.getBaseName());
+        
         try{
            
             this.assertClassInvariants();
