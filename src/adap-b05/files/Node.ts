@@ -1,4 +1,4 @@
-import { error } from "console";
+
 import { ExceptionType, AssertionDispatcher } from "../common/AssertionDispatcher";
 import { IllegalArgumentException } from "../common/IllegalArgumentException";
 import { InvalidStateException } from "../common/InvalidStateException";
@@ -7,6 +7,7 @@ import { Name } from "../../adap-b05/names/Name";
 import { Directory } from "./Directory";
 import { ServiceFailureException } from "../common/ServiceFailureException";
 import { Exception } from "../common/Exception";
+
 
 export class Node {
 

@@ -10,7 +10,7 @@ import { RootNode } from "../../../src/adap-b05/files/RootNode";
 import { Exception } from "../../adap-b05/common/Exception";
 import {  ServiceFailureException } from "../../../src/adap-b05/common/ServiceFailureException";
 import { InvalidStateException } from "../../../src/adap-b05/common/InvalidStateException";
-
+import { Name } from "../names/Name";
 
 function createFileSystem(): RootNode {
   let rn: RootNode = new RootNode();
@@ -36,8 +36,8 @@ describe("Basic naming test", () => {
      let fs: RootNode = createFileSystem();
      let ls: Node = [...fs.findNodes("ls")][0];
      let link: Node =[...fs.findNodes("Link")][0];
-     console.log(link);
-    expect(ls.getFullName().isEqual(new StringName("/usr/bin/ls", '/')));
+     console.log(ls.getFullName());
+     expect(ls.getFullName().isEqual(new StringName("/usr/bin/ls", '/'))).toBe(true);
   });
 
 
@@ -45,8 +45,8 @@ describe("Basic naming test", () => {
     let fs: RootNode = createFileSystem();
     let ls: Node = [...fs.findNodes("ls")][0];
     let link: Node =[...fs.findNodes("Link")][0];
-    console.log(link);
-    expect(link.getFullName().isEqual(new StringName("/usr/home", '/')));
+    console.log(link.getFullName());
+    expect(link.getFullName().isEqual(new StringName("/home/.bashrc", '/'))).toBe(true);
  });
 });
 

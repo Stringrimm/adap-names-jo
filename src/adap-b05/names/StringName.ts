@@ -159,10 +159,6 @@ export class StringName extends AbstractName {
             //Notiz: Sollte eig nicht passieren, aber falls die Liste irgendwie null sein sollte, sollte man trotzdem im Fall der Fälle appenden können
             this.name = c;
         } 
-        else if (this.getComponent(0)==="")
-        {
-            this.name = this.delimiter+c;
-        }
         else 
         {
             this.name = this.name.concat(this.delimiter).concat(c);
