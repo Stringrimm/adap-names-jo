@@ -3,7 +3,7 @@ import { Name } from "./Name";
 import { AbstractName } from "./AbstractName";
 import { InvalidStateException } from "../common/InvalidStateException";
 import { IllegalArgumentException } from "../common/IllegalArgumentException";
-import { MethodFailureException } from "../common/MethodFailureException";
+import { MethodFailedException } from "../common/MethodFailedException";
 
 export class StringName extends AbstractName {
 
@@ -67,8 +67,8 @@ export class StringName extends AbstractName {
             this.name = this.name.slice(0,startPos).concat(c).concat(this.name.slice(endPos))
         }
 
-        MethodFailureException.assertCondition(this.getComponent(i) === c, "setting failed");
-        MethodFailureException.assertCondition(currLength == this.getNoComponents(), "Something went wrong while adding");
+        MethodFailedException.assertCondition(this.getComponent(i) === c, "setting failed");
+        MethodFailedException.assertCondition(currLength == this.getNoComponents(), "Something went wrong while adding");
 
         if(currLength != this.getNoComponents() || currLength != this.getNoComponents())
             {
@@ -148,7 +148,7 @@ export class StringName extends AbstractName {
             this.name = currName;
             this.length = currLength;
     }
-    //MethodFailureException.assertCondition(currLength+1 == this.getNoComponents(), "Append failed");
+    //MethodFailedException.assertCondition(currLength+1 == this.getNoComponents(), "Append failed");
     }
     append(c: string) {
         IllegalArgumentException.assertIsNotNullOrUndefined(c, "Appending string is null/undefined");
@@ -173,7 +173,7 @@ export class StringName extends AbstractName {
             this.name = currName;
             this.length = currLength;
         }
-        //MethodFailureException.assertCondition(currLength+1 == this.getNoComponents(), "Append failed");
+        //MethodFailedException.assertCondition(currLength+1 == this.getNoComponents(), "Append failed");
         this.invariantsCheck();
     }
     remove(i: number) {
@@ -205,8 +205,8 @@ export class StringName extends AbstractName {
             this.length = currLength;
             this.name = currName;
         }
-        MethodFailureException.assertCondition(currLength-1 == this.getNoComponents(), "Remove failed");
-        MethodFailureException.assertCondition(this.length > 0, "Removed last object!");
+        MethodFailedException.assertCondition(currLength-1 == this.getNoComponents(), "Remove failed");
+        MethodFailedException.assertCondition(this.length > 0, "Removed last object!");
         this.invariantsCheck();
     }
 
