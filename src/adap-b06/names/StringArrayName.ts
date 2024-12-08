@@ -37,6 +37,7 @@ export class StringArrayName extends AbstractName {
         IllegalArgumentException.assert(super.IndexWithinArray(i), "Insert failed: Index out of bounce");
         const temp_comp = this.components;
         temp_comp[i] = c;
+        this.invariantsCheck();
         return new StringArrayName(temp_comp, this.delimiter);
     }
 
@@ -46,8 +47,10 @@ export class StringArrayName extends AbstractName {
             let orginalSize = this.getNoComponents();
             let originalComp = this.components;
             let temp_comp = this.components.slice(0,i).concat(c).concat(this.components.slice(i));
+            let result = new StringArrayName(temp_comp, this.delimiter)
+            MethodFailedException.assert(orginalSize === this.getNoComponents(), "Concat failed at appending the object"); //First check if num comp is right
+            MethodFailedException.assert(orginalSize+1 === result.getNoComponents(), "Concat failed at appending the object");
             return new StringArrayName(temp_comp, this.delimiter);
-            MethodFailedException.assert(orginalSize+1 === this.getNoComponents(), "Concat failed at appending the object"); //First check if num comp is right
         }
     
     append(c: string): StringArrayName {
@@ -56,22 +59,11 @@ export class StringArrayName extends AbstractName {
         let orginalSize = this.getNoComponents();
         let originalComp = this.components;
         let temp_comp = this.components.concat(c);
-
-        return new StringArrayName(temp_comp, this.delimiter);
-        if(orginalSize+1 != this.getNoComponents() || this.getComponent(orginalSize) != c)
-        {
-            this.components = originalComp;
-        }
-
-        if(this.getNoComponents() < orginalSize+1 || this.getComponent(orginalSize) != c )
-        {
-            this.components = originalComp;
-        }
-        MethodFailedException.assert(orginalSize+1 === this.getNoComponents(), "Concat failed at appending the object"); //First check if num comp is right
-        MethodFailedException.assert(this.getComponent(orginalSize) === c, "Component didn't not add string to new component"); // then if component string is added
-     
-      
+        let result = new StringArrayName(temp_comp, this.delimiter);
+        MethodFailedException.assert(orginalSize === this.getNoComponents(), "Concat failed at appending the object"); //First check if num comp is right
+        MethodFailedException.assert(result.getComponent(orginalSize) === c, "Component didn't not add string to new component"); // then if component string is added
         this.invariantsCheck();
+        return result;
     }
     remove(i: number): StringArrayName {
         IllegalArgumentException.assert(super.IndexWithinArray(i), "Removing Index is out of bounce");
@@ -79,13 +71,12 @@ export class StringArrayName extends AbstractName {
         let orginalSize = this.getNoComponents();
         let originComp = this.components;
         let temp_comp =this.components.slice(0,i).concat(this.components.slice(i+1));
-        return new StringArrayName(temp_comp, this.delimiter);
-        if(this.getNoComponents() === orginalSize)
-        {
-            this.components = originComp;
-        }
-        MethodFailedException.assert(this.getNoComponents() === orginalSize-1, "Remove failed, length has not been updated");
+        let result = new StringArrayName(temp_comp, this.delimiter);
+        MethodFailedException.assert(this.getNoComponents() === orginalSize, "Remove failed, original has been altered");
+        MethodFailedException.assert(result.getNoComponents() === orginalSize-1, "Remove failed, value obj has not been altered");
         this.invariantsCheck();
+        return result;
+          
     }
 
     private invariantsCheck(): void 

@@ -105,6 +105,7 @@ describe("Null checks")
             
             expect(() => name1.isEqual(null as any)).toThrow(new IllegalArgumentException("Equality cannot be resolved: other is null/undefined"));
             expect(() => name2.isEqual(null as any)).toThrow(new IllegalArgumentException("Equality cannot be resolved: other is null/undefined"));    
+            expect(() => name1.isEqual(name2) == true);
         })
 
 

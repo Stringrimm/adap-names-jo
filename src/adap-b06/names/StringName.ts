@@ -4,6 +4,7 @@ import { AbstractName } from "./AbstractName";
 import { InvalidStateException } from "../common/InvalidStateException";
 import { IllegalArgumentException } from "../common/IllegalArgumentException";
 import { MethodFailedException } from "../common/MethodFailedException";
+import { assert } from "console";
 
 export class StringName extends AbstractName {
 
@@ -123,23 +124,32 @@ export class StringName extends AbstractName {
     IllegalArgumentException.assert(this.getNoComponents() >= i, "Index+1 is out of bounce (Insert to Append will fail)");
     let currLength = this.getNoComponents();
     let currName = this.name;
+    let result;
     if(this.name === "")
     {
         console.log(this.getNoComponents())
     }
     if(i === this.getNoComponents())
     {
-        return this.append(c);
+        result = this.append(c);
+        MethodFailedException.assert(c === result.getComponent(i), "Insert didn't add right obj, something went wrong");
+        MethodFailedException.assert(currLength === this.getNoComponents(), "Insert altered original");
+        MethodFailedException.assert(currLength+1 === result.getNoComponents(), "Insert didn't work");
+        this.invariantsCheck();
+        return result;
     }
     else 
     {
         //normal case
         let [startPos, endPos] = this.getCompInPos(i);
         let temp_name = this.name.slice(0,startPos).concat(c).concat(this.delimiter).concat(this.name.slice(startPos,endPos)).concat(this.name.slice(endPos));
+        result = new StringName(temp_name, this.delimiter);
+        MethodFailedException.assert(c === result.getComponent(i), "Insert didn't add right obj, something went wrong");
+        MethodFailedException.assert(currLength === this.getNoComponents(), "Insert altered original");
+        MethodFailedException.assert(currLength+1 === result.getNoComponents(), "Insert didn't work");
+        this.invariantsCheck();
         return new StringName(temp_name, this.delimiter);
     }
-    this.length++;
-
     
     //MethodFailedException.assertCondition(currLength+1 == this.getNoComponents(), "Append failed");
         

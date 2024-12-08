@@ -81,7 +81,7 @@ export abstract class AbstractName implements Name {
     public concat(other: Name): Name {
         IllegalArgumentException.assert(this.isNotNullOrUndefined(other), "Cannot concat null/undefined");
         IllegalArgumentException.assert(this.delimiter === other.getDelimiterCharacter(), "Delimited don't match up");
-        let currLength = other.getNoComponents();
+        let currLength = this.getNoComponents();
         let temp = this.clone();
         for(let i=0; i < other.getNoComponents(); i++)
         {
@@ -89,7 +89,7 @@ export abstract class AbstractName implements Name {
             let comp = other.getComponent(i);
             temp = temp.append(comp);
         }
-        //MethodFailedException.assert(currLength+this.getNoComponents() === this.getNoComponents(), "Concat went wrong");
+        MethodFailedException.assert(currLength === this.getNoComponents(), "Concat went wrong");
         return temp;
     }
 
